@@ -1,0 +1,11 @@
+---
+# This role installs packages required for a base development environment
+
+- name: Install basic packages
+  dnf: name={{ item }} state=present
+  become: true
+  with_items:
+    - "vim"
+    - "htop"
+    - "tmux"
+

@@ -1,0 +1,4 @@
+---
+java_versions:
+  - { package_version: 8u60, installed_version: 1.8.0_60, build: b27, priority: 2}
+  - { package_version: 7u79, installed_version: 1.7.0_79, build: b15, priority: 1}

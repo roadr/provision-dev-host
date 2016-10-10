@@ -1,0 +1,37 @@
+---
+- name: Download jdk
+  uri: 
+    url:
+      "http://download.oracle.com/otn-pub/java/jdk/{{ item.package_version }}-{{ item.build }}/jdk-{{ item.package_version }}-linux-x64.rpm"
+    HEADER_Cookie:
+      "gp gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
+    dest: "/tmp/ansible_java_{{ item.package_version }}.rpm"
+    status_code: 200,304
+  with_items: "{{ java_versions }}"
+  notify: 
+    - "Remove downloaded java rpms"
+
+- name: Install jdk
+  dnf: name=/tmp/ansible_java_{{ item.package_version }}.rpm state=present
+  become: true
+  with_items: "{{ java_versions }}"
+
+- name: Configure jre alternatives
+  alternatives:
+    name: "{{ item[1] }}"
+    path: "/usr/java/jdk{{ item[0].installed_version }}/jre/bin/{{ item[1] }}"
+    link: "/usr/bin/{{ item[1] }}"
+  become: true
+  with_nested: 
+    - "{{ java_versions }}"
+    - ['java']
+
+- name: Configure jdk alternatives
+  alternatives:
+    name: "{{ item[1] }}"
+    path: "/usr/java/jdk{{ item[0].installed_version }}/bin/{{ item[1] }}"
+    link: "/usr/bin/{{ item[1] }}"
+  become: true
+  with_nested: 
+    - "{{ java_versions }}"
+    - ['javac']
