@@ -1,0 +1,6 @@
+---
+- name: Remove downloaded java rpms
+  file: 
+    path: "/tmp/ansible_java_{{ item.package_version }}.rpm"
+    state: "absent"
+  with_items: "{{ java_versions }}"

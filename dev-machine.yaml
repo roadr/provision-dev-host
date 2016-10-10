@@ -1,0 +1,8 @@
+---
+
+- name: Provision development host
+  become_method: sudo
+  hosts: dev
+  roles:
+    - common
+    - java 
