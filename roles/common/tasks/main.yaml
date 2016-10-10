@@ -8,4 +8,5 @@
     - "vim"
     - "htop"
     - "tmux"
-
+    - "git"
+    - "meld"
