@@ -1,2 +1,2 @@
-dotfiles-from-repo: "{{ ansible_env.HOME }}/code/provision-dev-host/roles/dotfiles/files"
+dotfiles_from_repo: "{{ ansible_env.HOME }}/code/provision-dev-host/roles/dotfiles/files"
 
