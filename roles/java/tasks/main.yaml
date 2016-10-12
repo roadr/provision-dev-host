@@ -1,4 +1,10 @@
 ---
+- name: Verify installed java versions
+  file: path=/usr/java/jdk{{ item.installed_version }} state=directory
+  become: True
+  with_items: "{{ java_versions }}"
+  register: verify_installation_directories
+
 - name: Download jdk
   uri: 
     url:
@@ -10,11 +16,15 @@
   with_items: "{{ java_versions }}"
   notify: 
     - "Remove downloaded java rpms"
+  when:
+    - force_java_installation or verify_installation_directories | changed
 
 - name: Install jdk
   dnf: name=/tmp/ansible_java_{{ item.package_version }}.rpm state=present
   become: true
   with_items: "{{ java_versions }}"
+  when:
+    - force_java_installation or verify_installation_directories | changed
 
 - name: Configure jre alternatives
   alternatives:
@@ -25,6 +35,8 @@
   with_nested: 
     - "{{ java_versions }}"
     - ['java']
+  when:
+    - force_java_installation or verify_installation_directories | changed
 
 - name: Configure jdk alternatives
   alternatives:
@@ -35,3 +47,5 @@
   with_nested: 
     - "{{ java_versions }}"
     - ['javac']
+  when:
+    - force_java_installation or verify_installation_directories | changed

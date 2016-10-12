@@ -4,3 +4,5 @@
 java_versions:
   - { package_version: 7u79, installed_version: 1.7.0_79, build: b15, priority: 1}
   - { package_version: 8u101, installed_version: 1.8.0_101, build: b13, priority: 2}
+
+force_java_installation: false
