@@ -1,0 +1,7 @@
+---
+
+- name: Add personal dotfiles
+  become_method: sudo
+  hosts: dev
+  roles:
+    - personalization
