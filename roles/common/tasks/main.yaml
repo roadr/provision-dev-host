@@ -1,6 +1,5 @@
 ---
 # This role installs packages required for a base development environment
-
 - name: Install basic packages
   dnf: name={{ item }} state=present
   become: true
@@ -12,11 +11,3 @@
     - "meld"
     - "dnf-plugins-core"
     - "xclip"
-
-- name: Enable nvim repo
-  become: true
-  command: dnf -y copr enable dperson/neovim
-
-- name: Install nvim
-  become: true
-  dnf: name=neovim enablerepo='dperson/neovim' state=present

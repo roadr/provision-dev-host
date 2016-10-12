@@ -50,10 +50,6 @@
   when:
     - force_java_installation or verify_installation_directories | changed
 
-- name: Java bash environment file
-  file: path=/etc/profile.d/java.sh state=file mode=0644
-  become: true
-
 - name: Java home environment variable
   lineinfile:
     dest: /etc/profile.d/java.sh
