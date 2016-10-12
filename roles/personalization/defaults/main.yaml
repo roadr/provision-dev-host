@@ -1,0 +1,2 @@
+---
+code_directory: "{{ ansible_env.HOME }}/code"

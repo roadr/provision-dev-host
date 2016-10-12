@@ -1,0 +1,10 @@
+---
+
+- name: Create code directory
+  file: path={{ code_directory }} state=directory
+
+- name: "Clone provision-dev-host"
+  git:
+    repo: https://github.com/roadr/provision-dev-host.git
+    dest: "{{ code_directory }}/provision-dev-host"
+    version: HEAD
