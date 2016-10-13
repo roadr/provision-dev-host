@@ -15,3 +15,20 @@
     backup: yes
     line: alias vim='nvim'
   become: true
+
+- name: "Link .vimrc file to home directory"
+  file:
+    src: "{{ ansible_env.HOME }}/code/provision-dev-host/roles/nvim/files/.vimrc"
+    dest: "{{ ansible_env.HOME }}/.vimrc"
+    state: link
+
+- name: "Create nvim config dir"
+  file:
+   path: "{{ ansible_env.HOME }}/.config/nvim"
+   state: directory
+
+- name: "Link default nvim configuration file"
+  file:
+    src: "{{ ansible_env.HOME }}/.vimrc"
+    dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
+    state: link
