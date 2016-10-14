@@ -29,7 +29,7 @@
 
 - name: "Create autoload directory"
   file:
-    path: "{{ ansible_env.HOME }}/.config/autoload"
+    path: "{{ ansible_env.HOME }}/.config/nvim/autoload"
     state: directory
 
 - name: "Setup vim plug"
