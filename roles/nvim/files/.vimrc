@@ -18,6 +18,7 @@ call plug#end()
 silent! set background=dark
 silent! colorscheme solarized
 set ruler
+let g:solarized_termcolors=256 " Needed when when terminal is not set to solarized
 set cursorline
 set colorcolumn=80
 set t_Co=256
