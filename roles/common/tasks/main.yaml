@@ -11,3 +11,4 @@
     - "meld"
     - "dnf-plugins-core"
     - "xclip"
+    - "libselinux-python"
