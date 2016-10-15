@@ -13,6 +13,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'https://github.com/nvie/vim-flake8.git', { 'for': 'python'}
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'bling/vim-airline'
+Plug 'scrooloose/syntastic'
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 call plug#end()
 
 " For vim-colors-solarized plugin
@@ -23,3 +25,6 @@ set ruler
 set cursorline
 set colorcolumn=80
 set t_Co=256
+
+" Open Nerdtree by default
+au VimEnter *  NERDTree
