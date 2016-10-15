@@ -8,3 +8,9 @@
     repo: https://github.com/roadr/provision-dev-host.git
     dest: "{{ code_directory }}/provision-dev-host"
     version: HEAD
+
+- replace:
+    dest: "{{ code_directory }}/provision-dev-host/.git/config"
+    regexp: https.+git
+    replace: "git@github.com:roadr/provision-dev-host.git" 
+    backup: yes
