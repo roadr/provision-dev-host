@@ -7,6 +7,7 @@
   git:
     repo: https://github.com/roadr/provision-dev-host.git
     dest: "{{ code_directory }}/provision-dev-host"
+    update: no
 
 - name: "Fix remote git uri used for provision-dev-host repo"
   replace:
