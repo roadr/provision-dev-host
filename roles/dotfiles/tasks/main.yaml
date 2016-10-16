@@ -5,7 +5,7 @@
     - ".tmux.conf"
     - ".gitignore_global"
 
-- name: "Configure git globla ignore file"
+- name: "Configure git global ignore file"
   git_config:
     scope: global
     name: core.excludesfile
