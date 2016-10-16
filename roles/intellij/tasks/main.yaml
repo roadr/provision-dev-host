@@ -1,0 +1,39 @@
+---
+
+- name: "Check if default version is available"
+  uri:
+    url: https://download.jetbrains.com/idea/{{ default_version }}
+    method: HEAD
+    status_code: 200
+  register: is_available_check
+
+  #- set_fact:
+  #    version_to_be_installed: "{{ default_version }}"
+  #
+  #- name: "Version of intellij to be installed"
+  #  vars_prompt:
+  #    - name: "version_to_be_installed"
+  #      prompt: "What version of intellij should be installed?"
+  #      default: "{{ default_version }}"
+  #  when: is_available_check | failed
+
+- name: "Download intellij"
+  uri:
+    url: https://download.jetbrains.com/idea/{{ default_version }}
+    status_code: 200
+    dest: /tmp
+    creates: yes
+
+- name: "Install intellij"
+  become: true
+  unarchive:
+    src: "/tmp/{{ default_version }}"
+    dest: /opt/
+
+- name: "Configure desktop shortcut"
+  become: true
+  file:
+    src: intellij.desktop
+    dest: /usr/share/applications/intellij.desktop
+    state: file
+    mode: 0644
