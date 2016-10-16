@@ -9,8 +9,9 @@
     dest: "{{ code_directory }}/provision-dev-host"
     version: HEAD
 
-- replace:
+- name: "Fix remote git uri used for provision-dev-host repo"
+  replace:
     dest: "{{ code_directory }}/provision-dev-host/.git/config"
     regexp: https.+git
-    replace: "git@github.com:roadr/provision-dev-host.git" 
+    replace: "git@github.com:roadr/provision-dev-host.git"
     backup: yes
