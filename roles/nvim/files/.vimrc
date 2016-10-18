@@ -25,6 +25,3 @@ set ruler
 set cursorline
 set colorcolumn=80
 set t_Co=256
-
-" Open Nerdtree by default
-au VimEnter *  NERDTree
