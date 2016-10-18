@@ -3,6 +3,25 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
+" -- Search
+set ignorecase " Ignore case when searching
+set smartcase " If there is an uppercase in your search term
+" search case sensitive again
+set incsearch " Highlight search results when typing
+set hlsearch " Highlight search results
+
+
+" Lean vim the hardway
+" Disabling the directional keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
 " Clear highligh on escape in normal mode
 nnoremap <esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
