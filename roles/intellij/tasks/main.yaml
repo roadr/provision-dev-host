@@ -1,17 +1,17 @@
 ---
 
 - name: "Check versions available"
-  uri: 
+  uri:
     url: "{{ build_url }}"
     return_content: yes
   register: server_response
-  tags: intellij 
+  tags: intellij
 
-- set_fact: 
+- set_fact:
     build: "{{ server_response['json']['IIC'][0]['build'] }}"
     date: "{{ server_response['json']['IIC'][0]['date'] }}"
     link: "{{ server_response['json']['IIC'][0]['downloads']['linux']['link'] }}"
-  tags: intellij 
+  tags: intellij
 
 - set_fact:
     build_dir: "{{ build }}-{{ date }}"
@@ -26,13 +26,13 @@
 
 - name: "Download intellij"
   become: true
-  unarchive: 
+  unarchive:
     extra_opts: ['--strip-components=1', '--show-stored-names']
     src: "{{ link }}"
     dest: /opt/intellij/{{ build_dir }}
     creates: yes
     copy: no
-  tags: intellij 
+  tags: intellij
   when: existing_installation | changed
 
 - name: "Setup links"
