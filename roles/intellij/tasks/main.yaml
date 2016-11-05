@@ -1,38 +1,53 @@
 ---
 
-- name: "Check if default version is available"
-  uri:
-    url: https://download.jetbrains.com/idea/{{ default_version }}
-    method: HEAD
-    status_code: 200
-  register: is_available_check
+- name: "Check versions available"
+  uri: 
+    url: "{{ build_url }}"
+    return_content: yes
+  register: server_response
+  tags: intellij 
 
-  #- set_fact:
-  #    version_to_be_installed: "{{ default_version }}"
-  #
-  #- name: "Version of intellij to be installed"
-  #  vars_prompt:
-  #    - name: "version_to_be_installed"
-  #      prompt: "What version of intellij should be installed?"
-  #      default: "{{ default_version }}"
-  #  when: is_available_check | failed
+- set_fact: 
+    build: "{{ server_response['json']['IIC'][0]['build'] }}"
+    date: "{{ server_response['json']['IIC'][0]['date'] }}"
+    link: "{{ server_response['json']['IIC'][0]['downloads']['linux']['link'] }}"
+  tags: intellij 
+
+- set_fact:
+    build_dir: "{{ build }}-{{ date }}"
+  tags: intellij
+
+- file:
+    state: directory
+    path: /opt/intellij/{{ build_dir }}
+  become: true
+  tags: intellij
+  register: existing_installation
 
 - name: "Download intellij"
-  uri:
-    url: https://download.jetbrains.com/idea/{{ default_version }}
-    status_code: 200
-    dest: /tmp
-    creates: yes
-
-- name: "Install intellij"
   become: true
-  unarchive:
-    src: "/tmp/{{ default_version }}"
-    dest: /opt/
+  unarchive: 
+    extra_opts: ['--strip-components=1', '--show-stored-names']
+    src: "{{ link }}"
+    dest: /opt/intellij/{{ build_dir }}
+    creates: yes
+    copy: no
+  tags: intellij 
+  when: existing_installation | changed
+
+- name: "Setup links"
+  become: true
+  file:
+    state: link
+    src: /opt/intellij/{{ build_dir }}
+    path: /opt/intellij/current
+  tags: intellij
 
 - name: "Configure desktop shortcut"
   become: true
-  copy:
-    src: intellij.desktop
+  template:
+    src: intellij.desktop.j2
     dest: /usr/share/applications/intellij.desktop
     mode: 0644
+  tags: intellij
+
