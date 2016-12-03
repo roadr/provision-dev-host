@@ -1,2 +1,3 @@
 default_version: "ideaIC-2016.2.5.tar.gz"
 build_url: "https://data.services.jetbrains.com/products/releases?code=IIU,IIC&latest=true&type=release"
+type: "IIC" #IIC for community edittion, override with IIU for ultimate edition
