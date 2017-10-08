@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 echo "Installing basics to run ansible playbooks"
-sudo dnf --releasever=24 -y install \
+sudo dnf --releasever=26 -y install \
   ansible-2.1.2.0 \
   python2 \
   python2-dnf

@@ -34,6 +34,7 @@ Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'bling/vim-airline'
 Plug 'scrooloose/syntastic'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'https://github.com/leafgarland/typescript-vim.git', {'for': 'typescript'}
 call plug#end()
 
 " For vim-colors-solarized plugin
@@ -44,3 +45,13 @@ set ruler
 set cursorline
 set colorcolumn=80
 set t_Co=256
+
+
+" Show whitespace characters
+set list
+set listchars=tab:▸\ ,eol:¬,trail:▫
+
+set tabstop=4
+set expandtab
+
+set clipboard+=unnamedplus

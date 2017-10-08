@@ -1,0 +1,28 @@
+---
+- name: Install adobe
+  dnf: name=http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm state=present
+  become: true
+
+- name: Install ack 
+  dnf: name=ack state=present
+  become: true
+
+- name: Install ruby 
+  dnf: name=ruby state=present
+  become: true
+
+- name: Install flash-plugin
+  dnf: name=flash-plugin state=present
+  become: true
+
+- name: Install ant
+  dnf: name=ant state=present
+  become: true
+
+- name: Install atop
+  dnf: name=ant state=present
+  become: true
+
+- name: Install discount
+  dnf: name=discount state=present
+  become: true

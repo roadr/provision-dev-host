@@ -51,3 +51,11 @@
     mode: 0644
   tags: intellij
 
+- name: "Setup idea vm options"
+  become: true
+  copy:
+    src: idea64.vmoptions
+    dest: /opt/intellij/current/bin
+    mode: 0644
+  tags: intellij
+
