@@ -32,7 +32,7 @@
     dest: /opt/intellij/{{ build_dir }}
     copy: no
   tags: intellij
-  when: existing_installation | changed or
+  when: existing_installation is changed or
           force_intellij is defined and force_intellij
 
 - name: "Setup links"

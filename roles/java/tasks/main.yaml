@@ -1,54 +1,50 @@
 ---
-- name: Verify installed java versions
-  file: path=/usr/java/jdk{{ item.installed_version }} state=directory
-  become: True
-  with_items: "{{ java_versions }}"
-  register: verify_installation_directories
+- name: Retrieve jdk rpm urls
+  java_rpm_util:
+    java_versions: "{{ j_versions }}"
+  register: recent_java_info
+  tags: java
 
-- name: Download jdk
-  uri: 
-    url:
-      "http://download.oracle.com/otn-pub/java/jdk/{{ item.package_version }}-{{ item.build }}/jdk-{{ item.package_version }}-linux-x64.rpm"
-    HEADER_Cookie:
-      "gp gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
-    dest: "/tmp/ansible_java_{{ item.package_version }}.rpm"
-    status_code: 200,304
-  with_items: "{{ java_versions }}"
-  notify: 
-    - "Remove downloaded java rpms"
+- name: Verify installed java versions
+  file: path=/usr/java/{{ item[1].complete_version }} state=directory
+  become: True
+  with_nested:
+    - "{{ j_versions }}"
+    - "{{ recent_java_info.meta }}"
+  register: verify_installation_directories
+  tags: java
+
+- name: Download jdk rpm
+  uri:
+     url: "{{item.rpm_url}}"
+     headers:
+        Cookie: "gp gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
+     dest: "/tmp/ansible_java_{{item.major_version}}.rpm"
+     status_code: 200, 304
+  with_items: "{{ recent_java_info.meta }}"
   when:
-    - force_java_installation or verify_installation_directories | changed
+    - force_java_installation or verify_installation_directories is changed
+  tags: java
 
 - name: Install jdk
-  dnf: name=/tmp/ansible_java_{{ item.package_version }}.rpm state=present
+  dnf: name=/tmp/ansible_java_{{ item }}.rpm state=present
   become: true
-  with_items: "{{ java_versions }}"
+  with_items: "{{ j_versions }}"
   when:
-    - force_java_installation or verify_installation_directories | changed
+    - force_java_installation or verify_installation_directories is changed
+  tags: java
 
-- name: Configure jre alternatives
+- name: Configure jdk and jre alternatives
   alternatives:
     name: "{{ item[1] }}"
-    path: "/usr/java/jdk{{ item[0].installed_version }}/jre/bin/{{ item[1] }}"
+    path: "/usr/java/{{ item[0].complete_version }}/bin/{{ item[1] }}"
     link: "/usr/bin/{{ item[1] }}"
+    priority: "{{ j_priorities[item[0].major_version] }}"
   become: true
   with_nested: 
-    - "{{ java_versions }}"
-    - ['java']
-  when:
-    - force_java_installation or verify_installation_directories | changed
-
-- name: Configure jdk alternatives
-  alternatives:
-    name: "{{ item[1] }}"
-    path: "/usr/java/jdk{{ item[0].installed_version }}/bin/{{ item[1] }}"
-    link: "/usr/bin/{{ item[1] }}"
-  become: true
-  with_nested: 
-    - "{{ java_versions }}"
-    - ['javac']
-  when:
-    - force_java_installation or verify_installation_directories | changed
+    - "{{ recent_java_info.meta }}"
+    - ['javac', 'java']
+  tags: java
 
 - name: Java home environment variable
   lineinfile:
@@ -56,5 +52,6 @@
     state: present
     create: yes
     backup: yes
-    line: export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s|bin/java||")
+    line: export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s|bin/javac||")
   become: true
+  tags: java

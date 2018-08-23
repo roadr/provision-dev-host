@@ -1,8 +1,14 @@
 ---
 # java versions to install, last one becomes default
 # alternatives module of ansible does not support priorities yet
-java_versions:
-  - { package_version: 7u79, installed_version: 1.7.0_79, build: b15, priority: 1}
-  - { package_version: 8u101, installed_version: 1.8.0_101, build: b13, priority: 2}
+# java_versions:
+#   - { package_version: 7u79, installed_version: 1.7.0_79, build: b15, priority: 1}
+#   - { package_version: 8u151, installed_version: 1.8.0_151, build: b12, priority: 2}
 
+# java 9 is end of life already
+j_versions: ["8", "10"]
+j_priorities: {"8": 999999, "10": 1 }
+#j_versions: ["10"]
 force_java_installation: false
+java_default: "10"
+

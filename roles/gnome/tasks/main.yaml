@@ -1,0 +1,4 @@
+---
+
+- name: Setup gnome settings
+  command: gsettings set org.gnome.shell.overrides workspaces-only-on-primary false 

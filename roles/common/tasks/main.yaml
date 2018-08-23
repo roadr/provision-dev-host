@@ -12,3 +12,4 @@
     - "dnf-plugins-core"
     - "xclip"
     - "libselinux-python"
+    - "task"
