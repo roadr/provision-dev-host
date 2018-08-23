@@ -27,7 +27,9 @@ def jdk_complete_version(version, rpm_url):
         complete_version = re.findall("jdk-(9\.[0-9.]+)", rpm_url)[0]
         return "jdk-%s" % complete_version
     elif version == "10":
-        return "jdk-10"
+        complete_version = re.findall("jdk-(10\.[0-9.]+)", rpm_url)[0]
+        return "jdk-%s" % complete_version
+        #return "jdk-10"
     else:
         raise "don't know how to parse complete version for major version %s" % version
 
