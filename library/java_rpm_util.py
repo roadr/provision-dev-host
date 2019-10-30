@@ -48,6 +48,7 @@ def main():
         #print(main_page_content)
         #print(jdk_page_pattern_for_version(java_v))
         match = re.findall(jdk_page_pattern_for_version(java_v), main_page_content)
+        #print(match)
         jdk_page_urls[java_v]=match[0]
 
     jdk_rpm_url = []

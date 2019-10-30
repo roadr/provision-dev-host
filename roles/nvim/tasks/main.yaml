@@ -23,7 +23,7 @@
 
 - name: "Link default nvim configuration file"
   file:
-    src: "{{ ansible_env.HOME }}/code/provision-dev-host/roles/nvim/files/.vimrc"
+    src: "{{ ansible_env.HOME }}/code/mine/provision-dev-host/roles/nvim/files/.vimrc"
     dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
     state: link
 

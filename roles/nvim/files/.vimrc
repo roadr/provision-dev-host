@@ -35,6 +35,7 @@ Plug 'bling/vim-airline'
 Plug 'scrooloose/syntastic'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'https://github.com/leafgarland/typescript-vim.git', {'for': 'typescript'}
+Plug 'pearofducks/ansible-vim'
 call plug#end()
 
 " For vim-colors-solarized plugin
